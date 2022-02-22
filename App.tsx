@@ -3,7 +3,7 @@ import { View, Text } from "react-native"
 const App: React.FC = () => {
 	return (
 		<View>
-			<Text testID="text">oi</Text>
+			<Text>oi</Text>
 		</View>
 	)
 }

@@ -10,6 +10,7 @@ module.exports = {
 		"google",
 		"plugin:prettier/recommended",
 		"plugin:react/jsx-runtime",
+		"plugin:storybook/recommended",
 	],
 	parser: "@typescript-eslint/parser",
 	parserOptions: {

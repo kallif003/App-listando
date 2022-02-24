@@ -1,5 +1,5 @@
 import Home from "./Home"
-import { render, fireEvent } from "@testing-library/react-native"
+import { fireEvent, render } from "@testing-library/react-native"
 
 describe("Header", () => {
 	it("Renders a logo", () => {

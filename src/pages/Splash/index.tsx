@@ -44,7 +44,7 @@ export default function Splash() {
 				.signInWithEmailAndPassword(email, password)
 				.then((user: any) => {
 					setTimeout(() => {
-						navigation.navigate(Criadas, {
+						navigation.navigate("Criadas", {
 							user: user.user.uid,
 							email: user.user.email,
 						})

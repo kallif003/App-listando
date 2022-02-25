@@ -27,7 +27,7 @@ if (parameters) {
 argsEnhancers.forEach((enhancer) => addArgsEnhancer(enhancer))
 
 const getStories = () => {
-	return [require("../stories/MyButton.stories.js")]
+	return []
 }
 
 configure(getStories, module, false)

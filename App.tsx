@@ -1,9 +1,9 @@
 import { useEffect } from "react"
 import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-
+import { LogBox } from "react-native"
 import Splash from "./src/pages/Splash"
-// import Login from "./src/pages/Login"
+import Login from "./src/pages/Login/Login"
 // import Criar from "./src/pages/Criar"
 // import Criadas from "./src/pages/Criadas"
 // import Box from "./src/pages/CheckBox"
@@ -15,6 +15,7 @@ const Stack = createNativeStackNavigator()
 
 export default function applistando() {
 	useEffect(() => {
+		LogBox.ignoreAllLogs()
 		BackHandler.addEventListener("hardwareBackPress", () => true)
 		return () =>
 			BackHandler.removeEventListener("hardwareBackPress", () => true)
@@ -29,12 +30,12 @@ export default function applistando() {
 					component={Splash}
 					options={{ headerShown: false }}
 				/>
-				{/* <Stack.Screen
+				<Stack.Screen
 					name="Login"
 					component={Login}
 					options={{ headerShown: false }}
 				/>
-				<Stack.Screen
+				{/* <Stack.Screen
 					name="Criadas"
 					component={Criadas}
 					options={{ headerShown: false }}
@@ -53,7 +54,7 @@ export default function applistando() {
 					name="NovaSenha"
 					component={NovaSenha}
 					options={{ headerShown: false }}
-				/> */}
+				/>  */}
 			</Stack.Navigator>
 		</NavigationContainer>
 	)

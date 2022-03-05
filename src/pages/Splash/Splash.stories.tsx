@@ -1,4 +1,4 @@
-import Splash from "../Splash"
+import Splash from "./Splash"
 import { LinearGradient } from "expo-linear-gradient"
 import LottieView from "lottie-react-native"
 import { StyleSheet, Dimensions } from "react-native"

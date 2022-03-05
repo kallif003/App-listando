@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useContext } from "react"
-import { StyleSheet, Dimensions } from "react-native"
-import { LinearGradient } from "expo-linear-gradient"
+import { Dimensions } from "react-native"
+import { Gradient } from "../../components/LinearGradient"
 import LottieView from "lottie-react-native"
 import { useNavigation, CommonActions } from "@react-navigation/native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
@@ -43,9 +43,7 @@ export default function Splash() {
 	}, [])
 
 	return (
-		<LinearGradient
-			colors={["#00acee", "#2eb2ff", "#0078d7"]}
-			style={styles.container}>
+		<Gradient colors={["#00acee", "#2eb2ff", "#0078d7"]}>
 			<LottieView
 				source={list}
 				style={{ width: size, height: size }}
@@ -53,14 +51,6 @@ export default function Splash() {
 				loop
 				resizeMode="contain"
 			/>
-		</LinearGradient>
+		</Gradient>
 	)
 }
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		alignItems: "center",
-		justifyContent: "center",
-		backgroundColor: "#00acee",
-	},
-})

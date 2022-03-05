@@ -1,16 +1,19 @@
-import { useEffect } from "react"
+/* eslint-disable no-unused-vars */
+import { useEffect, useContext } from "react"
 import { StyleSheet, Dimensions } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import LottieView from "lottie-react-native"
 import { useNavigation, CommonActions } from "@react-navigation/native"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import firebase from "../../connection/firebaseConnection"
 import list from "../../../assets/list.json"
+import { AuthContext } from "../../contexts/auth"
 
 const size = Dimensions.get("window").width * 0.5
 
 export default function Splash() {
 	const navigation = useNavigation()
+	const { login }: any = useContext(AuthContext)
+
 	let email: any = ""
 	let password: any = ""
 
@@ -19,12 +22,12 @@ export default function Splash() {
 			await AsyncStorage.getItem("email").then((value) => {
 				email = value
 			})
-			await AsyncStorage.getItem("senha").then((value) => {
+			await AsyncStorage.getItem("password").then((value) => {
 				password = value
 			})
 
 			if (email != null) {
-				logar()
+				login(email, password)
 			} else {
 				setTimeout(() => {
 					navigation.dispatch(
@@ -37,23 +40,6 @@ export default function Splash() {
 			}
 		}
 		pegarDadosAsyncStorage()
-
-		function logar() {
-			firebase
-				.auth()
-				.signInWithEmailAndPassword(email, password)
-				.then((user: any) => {
-					setTimeout(() => {
-						navigation.navigate("Criadas", {
-							user: user.user.uid,
-							email: user.user.email,
-						})
-					}, 5000)
-				})
-				.catch((erro) => {
-					console.log(erro)
-				})
-		}
 	}, [])
 
 	return (

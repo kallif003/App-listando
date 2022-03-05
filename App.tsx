@@ -10,6 +10,7 @@ import Login from "./src/pages/Login/Login"
 // import NovaSenha from "./src/pages/NovaSenha"
 import { StatusBar } from "expo-status-bar"
 import { BackHandler } from "react-native"
+import AuthProvider from "./src/contexts/auth"
 
 const Stack = createNativeStackNavigator()
 
@@ -23,19 +24,20 @@ export default function applistando() {
 
 	return (
 		<NavigationContainer>
-			<StatusBar style="light" translucent={true} backgroundColor="#00acee" />
-			<Stack.Navigator initialRouteName="Splash">
-				<Stack.Screen
-					name="Splash"
-					component={Splash}
-					options={{ headerShown: false }}
-				/>
-				<Stack.Screen
-					name="Login"
-					component={Login}
-					options={{ headerShown: false }}
-				/>
-				{/* <Stack.Screen
+			<AuthProvider>
+				<StatusBar style="light" translucent={true} backgroundColor="#00acee" />
+				<Stack.Navigator initialRouteName="Splash">
+					<Stack.Screen
+						name="Splash"
+						component={Splash}
+						options={{ headerShown: false }}
+					/>
+					<Stack.Screen
+						name="Login"
+						component={Login}
+						options={{ headerShown: false }}
+					/>
+					{/* <Stack.Screen
 					name="Criadas"
 					component={Criadas}
 					options={{ headerShown: false }}
@@ -55,7 +57,8 @@ export default function applistando() {
 					component={NovaSenha}
 					options={{ headerShown: false }}
 				/>  */}
-			</Stack.Navigator>
+				</Stack.Navigator>
+			</AuthProvider>
 		</NavigationContainer>
 	)
 }

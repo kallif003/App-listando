@@ -1,6 +1,5 @@
-import firebase from "../../connection/firebaseConnection"
-import { useState, useEffect } from "react"
-import { useNavigation } from "@react-navigation/native"
+import { useState, useEffect, useContext } from "react"
+import { useNavigation, CommonActions } from "@react-navigation/native"
 import {
 	View,
 	StyleSheet,
@@ -10,7 +9,6 @@ import {
 } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
-import AsyncStorage from "@react-native-async-storage/async-storage"
 import {
 	IconView,
 	InputView,
@@ -20,16 +18,15 @@ import {
 	TextBtn,
 	Tittle,
 } from "./styles"
+import { AuthContext } from "../../contexts/auth"
 
 export default function Login() {
 	const [type, setType] = useState("login")
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
 	const [boolean, setBoolean] = useState(false)
-
-	const [msgErro, setMsgErro] = useState("")
-
 	const navigation = useNavigation()
+	const { login, signUp, msgErro }: any = useContext(AuthContext)
 
 	useEffect(() => {
 		setBoolean(false)
@@ -37,37 +34,10 @@ export default function Login() {
 
 	async function acessar() {
 		if (type === "login") {
-			await firebase
-				.auth()
-				.signInWithEmailAndPassword(email, password)
-				.then((user: any) => {
-					navigation.navigate("Criadas", {
-						user: user.user.uid,
-						email: user.user.email,
-					})
-					AsyncStorage.setItem("email", email)
-					AsyncStorage.setItem("senha", password)
-					setEmail("")
-					setPassword("")
-				})
-				.catch((error) => {})
+			login(email, password)
 			Keyboard.dismiss()
 		} else {
-			await firebase
-				.auth()
-				.createUserWithEmailAndPassword(email, password)
-				.then((user: any) => {
-					navigation.navigate("Criadas", {
-						user: user.user.uid,
-						email: user.user.email,
-					})
-					AsyncStorage.setItem("email", email)
-					AsyncStorage.setItem("senha", password)
-				})
-				.catch((error) => {
-					setMsgErro("Informe um formato de email válido")
-				})
-
+			signUp(email, password)
 			Keyboard.dismiss()
 			setEmail("")
 			setPassword("")
@@ -76,14 +46,19 @@ export default function Login() {
 
 	function novaSenha() {
 		if (email !== "") {
-			navigation.navigate("NovaSenha", { Email: email })
+			navigation.dispatch(
+				CommonActions.reset({
+					index: 0,
+					routes: [{ name: "NovaSenha" }],
+				})
+			)
 			setEmail("")
 			setPassword("")
 		}
 	}
 
 	return (
-		<SafeAreaView style={{ backgroundColor: "#fff", flex: 1 }}>
+		<SafeAreaView style={{ flex: 1 }}>
 			<LinearGradient colors={["#00acee", "#0078d7"]} style={styles.container}>
 				<IconView>
 					<MaterialCommunityIcons name="playlist-edit" size={80} color="#fff" />
@@ -95,13 +70,12 @@ export default function Login() {
 					{boolean ? <TextError> {msgErro} </TextError> : <View />}
 					<Input
 						placeholder="Email:"
-						onChange={(texto: any) => setEmail(texto)}
-						value={email}
+						onChangeText={(texto) => setEmail(texto)}
 						autoCompleteType="off"
 					/>
 					<Input
 						placeholder="Senha:"
-						onChange={(texto: any) => setPassword(texto)}
+						onChangeText={(texto) => setPassword(texto)}
 						value={password}
 						secureTextEntry={true}
 					/>

@@ -19,7 +19,7 @@ function AuthProvider({ children }: any) {
 				navigation.dispatch(
 					CommonActions.reset({
 						index: 0,
-						routes: [{ name: "Login" }],
+						routes: [{ name: "Home" }],
 					})
 				)
 			})
@@ -35,18 +35,39 @@ function AuthProvider({ children }: any) {
 				navigation.dispatch(
 					CommonActions.reset({
 						index: 0,
-						routes: [{ name: "Login" }],
+						routes: [{ name: "Home" }],
 					})
 				)
 			})
 			.catch((error) => {
 				setMsgErro("Email ou senha invalidos")
+				navigation.dispatch(
+					CommonActions.reset({
+						index: 0,
+						routes: [{ name: "Login" }],
+					})
+				)
 			})
 		AsyncStorage.setItem("email", email)
 		AsyncStorage.setItem("password", password)
 	}
+
+	async function logout() {
+		await firebase
+			.auth()
+			.signOut()
+			.then(() => {
+				navigation.dispatch(
+					CommonActions.reset({
+						index: 0,
+						routes: [{ name: "Login" }],
+					})
+				)
+				AsyncStorage.clear()
+			})
+	}
 	return (
-		<AuthContext.Provider value={{ msgErro, login, signUp }}>
+		<AuthContext.Provider value={{ msgErro, login, signUp, logout }}>
 			{children}
 		</AuthContext.Provider>
 	)

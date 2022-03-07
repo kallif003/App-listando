@@ -9,13 +9,15 @@ export const AuthContext = createContext({})
 
 function AuthProvider({ children }: any) {
 	const [msgErro, setMsgErro] = useState("")
+	const [user, setUser] = useState("")
+	const [nameLists, setNameLists] = useState({})
 	const navigation = useNavigation()
 
 	async function signUp(email: string, password: string) {
 		await firebase
 			.auth()
 			.createUserWithEmailAndPassword(email, password)
-			.then(() => {
+			.then((user) => {
 				navigation.dispatch(
 					CommonActions.reset({
 						index: 0,
@@ -31,13 +33,15 @@ function AuthProvider({ children }: any) {
 		await firebase
 			.auth()
 			.signInWithEmailAndPassword(email, password)
-			.then(() => {
+			.then((value: any) => {
 				navigation.dispatch(
 					CommonActions.reset({
 						index: 0,
 						routes: [{ name: "Home" }],
 					})
 				)
+				setUser(value.user.uid)
+				console.log(user)
 			})
 			.catch((error) => {
 				setMsgErro("Email ou senha invalidos")
@@ -66,8 +70,28 @@ function AuthProvider({ children }: any) {
 				AsyncStorage.clear()
 			})
 	}
+
+	async function getUser() {
+		await firebase
+			.database()
+			.ref("Listas")
+			.child(user)
+			.on("value", (snapshot) => {
+				setNameLists([])
+
+				snapshot.forEach((childItem) => {
+					const data = {
+						key: childItem.key,
+						lista: childItem.key,
+					}
+					setNameLists((old: never[]) => [...old, data])
+				})
+			})
+	}
+
 	return (
-		<AuthContext.Provider value={{ msgErro, login, signUp, logout }}>
+		<AuthContext.Provider
+			value={{ user, msgErro, login, signUp, logout, nameLists }}>
 			{children}
 		</AuthContext.Provider>
 	)

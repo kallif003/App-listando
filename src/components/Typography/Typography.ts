@@ -23,3 +23,9 @@ export const PrimaryButtonText = styled.Text`
 	font-size: 25px;
 	color: #fff;
 `
+export const TextListButton = styled.Text`
+	color: #000;
+	font-size: 17px;
+	font-weight: bold;
+	margin-left: 10px;
+`

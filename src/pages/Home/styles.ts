@@ -8,5 +8,3 @@ export const Flat = styled.View`
 	margin-top: 10px;
 	height: 99%;
 `
-
-export const LogoutButton = styled.TouchableOpacity``

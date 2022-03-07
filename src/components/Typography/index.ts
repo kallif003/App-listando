@@ -3,4 +3,5 @@ export {
 	TextError,
 	PrimaryButtonText,
 	SecondaryButtonText,
+	TextListButton,
 } from "./Typography"

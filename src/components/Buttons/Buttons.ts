@@ -25,3 +25,17 @@ export const ForgotPassword = styled.TouchableOpacity`
 	margin-top: 10px;
 	font-size: 13px;
 `
+export const LogoutButton = styled.TouchableOpacity``
+
+export const ListButton = styled.TouchableOpacity`
+	width: 95%;
+	height: 50px;
+	justify-content: space-between;
+	border-radius: 5px;
+	border-color: #000;
+	border-width: 2px;
+	flex-direction: row;
+	padding: 10px;
+`
+// elevation: 5;
+export const DeleteButton = styled.TouchableOpacity``
